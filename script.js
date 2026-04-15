@@ -1,27 +1,6 @@
-if (typeof module !== 'undefined') {
-    module.exports = { formatSmsMessage };
-}
-
 function formatSmsMessage(name, baseMessage) {
     if (!name) return `Healing River: ${baseMessage}`;
     return `Healing River: Welcome ${name}! ${baseMessage}`;
-}
-
-/* code explanation */
-
-async function loadVerse() {
-    const textTarget = document.getElementById('bible-text');
-    const refTarget = document.getElementById('bible-ref');
-    try {
-        const response = await fetch('https://bible-api.com/john+4:14');
-        const data = await response.json();
-        if (textTarget && refTarget) {
-            textTarget.innerText = `"${data.text.trim()}"`;
-            refTarget.innerText = `— ${data.reference}`;
-        }
-    } catch (err) {
-        console.error("API Error:", err);
-    }
 }
 
 async function sendChurchSMS(phone, message) {
@@ -42,6 +21,40 @@ async function sendChurchSMS(phone, message) {
     }
 }
 
+async function loadDailyInspiration() {
+    const textTarget = document.getElementById('bible-text');
+    const refTarget = document.getElementById('bible-ref');
+    
+    if (!textTarget) return;
+
+    try {
+        const response = await fetch('https://bible-api.com/john+4:14');
+        const data = await response.json();
+        textTarget.innerText = `"${data.text.trim()}"`;
+        refTarget.innerText = `— ${data.reference}`;
+    } catch (err) {
+        textTarget.innerText = "But whoever drinks the water I give them will never thirst.";
+        refTarget.innerText = "— John 4:14";
+    }
+}
+
+// verse of the moment
+async function fetchRandomVerse() {
+    const verseElement = document.getElementById('random-verse-text');
+    const refElement = document.getElementById('random-verse-ref');
+    if (!verseElement) return;
+
+    try {
+        const response = await fetch('https://bible-api.com/?random=verse');
+        const data = await response.json();
+        verseElement.innerText = `"${data.text.trim()}"`;
+        refElement.innerText = `- ${data.reference}`;
+    } catch (error) {
+        verseElement.innerText = "Be strong and courageous.";
+        refElement.innerText = "- Joshua 1:9";
+    }
+}
+
 async function subscribeToVerse() {
     const phoneInput = document.getElementById('member-phone');
     const verseText = document.getElementById('bible-text')?.innerText || "";
@@ -52,163 +65,67 @@ async function subscribeToVerse() {
         return;
     }
 
-    const fullMsg = `Healing River: ${verseText} - ${verseRef}`;
+    const fullMsg = `Healing River Daily Grace: ${verseText} ${verseRef}`;
     const success = await sendChurchSMS(phoneInput.value.trim(), fullMsg);
     
     if (success) {
-        alert("Success! Full verse sent.");
+        alert("Subscribed! Your verse is on the way.");
         phoneInput.value = ""; 
+    } else {
+        alert("Could not subscribe at this time.");
     }
 }
 
 async function unsubscribeFromVerse() {
     const phoneInput = document.getElementById('member-phone');
     if (!phoneInput || !phoneInput.value) {
-        alert("Enter your phone number.");
+        alert("Enter your phone number to unsubscribe.");
         return;
     }
 
-    const goodbyeMsg = "Healing River: You have been unsubscribed.";
+    const goodbyeMsg = "Healing River: You have been unsubscribed from Daily Grace.";
     const success = await sendChurchSMS(phoneInput.value.trim(), goodbyeMsg);
     
     if (success) {
-        alert("Unsubscribed.");
+        alert("Unsubscribed successfully.");
         phoneInput.value = "";
     }
 }
 
-document.addEventListener('DOMContentLoaded', loadVerse);
-
 async function joinSundayService() {
-    const nameVal = document.getElementById('visitor-name').value;
-    const phoneVal = document.getElementById('visitor-phone').value;
+    const nameInput = document.getElementById('visitor-name');
+    const phoneInput = document.getElementById('visitor-phone');
+    const btn = document.querySelector('.btn-submit');
 
-    if (!nameVal || !phoneVal) {
+    if (!nameInput.value || !phoneInput.value) {
         alert("Please provide both your name and phone number.");
         return;
     }
 
-    const message = `Healing River: Welcome ${nameVal}! We are looking forward to seeing you this Sunday at 10:00 AM. God bless you!`;
-
-    // sendChurchSMS is the function we built earlier with the Texin API Key
-    const success = await sendChurchSMS(phoneVal.trim(), message);
-
-    if (success) {
-        alert("Registration Successful! Check your phone for a confirmation.");
-        document.getElementById('visitor-name').value = "";
-        document.getElementById('visitor-phone').value = "";
-    } else {
-        alert("SMS Gateway is busy. Please try again in a moment.");
-    }
-}
-
-/* Placeholder Logic for Frontend Demo */
-
-function joinSundayService() {
-    const btn = document.querySelector('.btn-submit');
-    if (!btn) return;
-
-    const originalText = btn.innerText;
     btn.innerText = "Processing...";
     btn.disabled = true;
 
-    // Simulate a brief network delay
-    setTimeout(() => {
-        alert("Thank you for your interest! The Sunday Registration feature is coming soon.");
-        btn.innerText = originalText;
-        btn.disabled = false;
-    }, 1000);
-}
-
-function processGiving() {
-    const btn = document.querySelector('.btn-give');
-    if (!btn) return;
-
-    const originalText = btn.innerText;
-    btn.innerText = "Connecting to M-Pesa...";
-    btn.disabled = true;
-
-    setTimeout(() => {
-        alert("Giving Portal: This feature is currently under maintenance. Please use our physical Paybill 000000 for now.");
-        btn.innerText = originalText;
-        btn.disabled = false;
-    }, 1500);
-}
-
-function showComingSoon() {
-    const btn = document.getElementById('giving-btn');
-    const originalText = btn.innerText;
-
-    // Visual feedback that the button was pressed
-    btn.innerText = "Connecting...";
-    btn.style.opacity = "0.7";
-    btn.disabled = true;
-
-    setTimeout(() => {
-        alert("Healing River Giving Portal: This feature is coming soon! Please use our physical offering boxes or Paybill in the meantime.");
-        
-        // Reset the button
-        btn.innerText = originalText;
-        btn.style.opacity = "1";
-        btn.disabled = false;
-    }, 8000); // 0.8 second delay smooth
-}
-
-async function sendContactSMS() {
-    // 1. Grab values from your form
-    const name = document.getElementById('name').value;
-    const email = document.getElementById('email').value;
-    const subject = document.getElementById('subject').value;
-    const userMsg = document.getElementById('message').value;
-    const btn = document.getElementById('contact-btn');
-
-    // 2. Simple Validation
-    if (!name || !email || !userMsg) {
-        alert("Please fill in all required fields.");
-        return;
-    }
-
-    // 3. UI Feedback
-    btn.innerText = "Sending...";
-    btn.disabled = true;
-
-    // 4. Construct the message for YOU (the admin)
-    const alertForAdmin = `Church Web Msg: ${name} (${email}) Subject: ${subject}. Message: ${userMsg}`;
-
-    // 5. YOUR Phone Number
-    const adminPhone = "2547XXXXXXXX"; // Replace with your number
-
-    // 6. Call the SMS function we built earlier
-    const success = await sendChurchSMS(adminPhone, alertForAdmin);
+    const message = formatSmsMessage(nameInput.value, "We look forward to seeing you this Sunday at 10:00 AM.");
+    const success = await sendChurchSMS(phoneInput.value.trim(), message);
 
     if (success) {
-        alert("Blessings! Your message has been sent to our team.");
-        document.getElementById('contact-form').reset(); // Clears the form
+        alert("Registration Successful!");
+        nameInput.value = "";
+        phoneInput.value = "";
     } else {
-        alert("There was an issue sending your message. Please try again.");
+        alert("SMS Gateway busy. Please try again.");
     }
 
-    btn.innerText = "Send Message";
+    btn.innerText = "Register for Sunday";
     btn.disabled = false;
 }
 
-// Function to fetch a completely random verse on every load
-async function fetchNewVerse() {
-    const verseElement = document.getElementById('random-verse-text');
-    const refElement = document.getElementById('random-verse-ref');
+// Runs everything on page load
+window.addEventListener('load', () => {
+    loadDailyInspiration();
+    fetchRandomVerse();
+});
 
-    try {
-        // We use the 'random' endpoint so it's different every time
-        const response = await fetch('https://bible-api.com/?random=verse');
-        const data = await response.json();
-
-        verseElement.innerText = `"${data.text.trim()}"`;
-        refElement.innerText = `- ${data.reference}`;
-    } catch (error) {
-        verseElement.innerText = "Be strong and courageous. Do not be afraid; do not be discouraged, for the Lord your God will be with you wherever you go.";
-        refElement.innerText = "- Joshua 1:9";
-    }
+if (typeof module !== 'undefined') {
+    module.exports = { formatSmsMessage, sendChurchSMS };
 }
-
-// run when the page opens to ensure we get a fresh verse every time
-window.addEventListener('load', fetchNewVerse);
