@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us | Healing River Ministries</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="logo" href="WhatsApp Image 2026-04-13 at 15.33.09 (1).jpeg">
+</head>
+<body>
+    <header>
+        <div style="display:flex; align-items:center; gap:10px;">
+            <img src="WhatsApp Image 2026-04-13 at 15.33.09 (1).jpeg" alt="Healing River Logo">
+            <h1>Healing River Ministries</h1>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="ministries.html">Ministries</a></li>
+                <li><a href="give.html">Give</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section>
+            <h2>Get In Touch</h2>
+            <p>Have a question, a prayer request, or just want to say hello? Our team typically responds within 24–48 hours.</p>
+        </section>
+
+        <section class="grid">
+            <div class="card">
+                <h3>Send Us a Message</h3>
+                <form id="contact-form">
+                    <div>
+                        <label for="name">Full Name:</label>
+                        <input type="text" id="name" required>
+                    </div>
+                    <div>
+                        <label for="email">Email Address:</label>
+                        <input type="email" id="email" required>
+                    </div>
+                    <div>
+                        <label for="subject">How can we help?</label>
+                        <select id="subject">
+                            <option value="General Inquiry">General Inquiry</option>
+                            <option value="Prayer Request">Prayer Request</option>
+                            <option value="Volunteering">Volunteering</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="message">Your Message:</label>
+                        <textarea id="message" rows="5" required></textarea>
+                    </div>
+                        <button type="button" id="contact-btn" onclick="sendContactSMS()">Send Message</button>
+                </form>
+            </div>
+
+            <div class="card">
+                <h3>Connect With Us</h3>
+                <p><strong>Office Hours:</strong> Tuesday – Friday, 9:00 AM – 4:00 PM</p>
+                <p><strong>Phone:</strong> (555) 012-3456</p>
+                <p><strong>Email:</strong> info@healingriver.org</p>
+                <p><strong>Address:</strong><br>123 Grace Lane, River City, ST 54321</p>
+                <hr style="margin: 20px 0; border: 0; border-top: 1px solid var(--river-gold);">
+                <h4>Visit Us</h4>
+                <p>We are located in the heart of River City, just two blocks east of the Main Street bridge.</p>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>info@healingriver.org | (254) 0720466742</p>
+        <div class="socials">
+            <a href="https://www.facebook.com/p/Healing-River-Ministries-International-100071726798940/">Facebook</a> | <a href="#">Instagram</a> | <a href="#">YouTube</a>
+        </div>
+        <p><small>&copy; 2026 Healing River Ministries. Flowing in Grace, Rooted in Love.</small></p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
