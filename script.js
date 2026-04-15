@@ -121,10 +121,12 @@ async function joinSundayService() {
 }
 
 // Runs everything on page load
-window.addEventListener('load', () => {
-    loadDailyInspiration();
-    fetchRandomVerse();
-});
+if (typeof window !== 'undefined') {
+    window.addEventListener('load', () => {
+        loadDailyInspiration();
+        fetchRandomVerse();
+    });
+}
 
 if (typeof module !== 'undefined') {
     module.exports = { formatSmsMessage, sendChurchSMS };
