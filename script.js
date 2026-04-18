@@ -21,14 +21,36 @@ async function sendChurchSMS(phone, message) {
     }
 }
 
+function getDailyVerseReference() {
+    const verses = [
+        'john+4:14',
+        'psalm+23:1',
+        'isaiah+41:10',
+        'philippians+4:13',
+        'jeremiah+29:11',
+        'proverbs+3:5',
+        'matthew+11:28',
+        'psalm+46:1',
+        '2+corinthians+12:9',
+        'romans+8:28'
+    ];
+    const now = new Date();
+    const start = new Date(now.getFullYear(), 0, 0);
+    const diff = now - start;
+    const oneDay = 1000 * 60 * 60 * 24;
+    const dayOfYear = Math.floor(diff / oneDay);
+    return verses[dayOfYear % verses.length];
+}
+
 async function loadDailyInspiration() {
     const textTarget = document.getElementById('bible-text');
     const refTarget = document.getElementById('bible-ref');
     
-    if (!textTarget) return;
+    if (!textTarget || !refTarget) return;
 
+    const verseRef = getDailyVerseReference();
     try {
-        const response = await fetch('https://bible-api.com/john+4:14');
+        const response = await fetch(`https://bible-api.com/${verseRef}`);
         const data = await response.json();
         textTarget.innerText = `"${data.text.trim()}"`;
         refTarget.innerText = `— ${data.reference}`;
