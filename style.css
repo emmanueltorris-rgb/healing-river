@@ -213,5 +213,143 @@ button {
 }
 
 @media (max-width: 768px) {
-    header { flex-direction: column; gap: 1rem; }
+    header {
+        flex-direction: column;
+        gap: 1rem;
+        padding: 1rem 2%;
+    }
+
+    header img {
+        height: 40px;
+    }
+
+    nav ul {
+        gap: 15px;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    main {
+        padding: 1rem 2%;
+    }
+
+    .grid {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+
+    .card {
+        padding: 1.5rem;
+    }
+
+    #bible-verse-container {
+        padding: 1.5rem;
+        margin: 1rem 0;
+    }
+
+    .join-us-card {
+        padding: 20px;
+        margin: 10px auto;
+        max-width: 100%;
+    }
+
+    .verse-card {
+        padding: 15px;
+        margin: 15px 0;
+    }
+
+    .form-group input {
+        padding: 10px;
+        font-size: 0.9rem;
+    }
+
+    .btn-submit {
+        padding: 12px;
+        font-size: 1rem;
+    }
+
+    button {
+        padding: 10px 20px;
+        font-size: 0.9rem;
+    }
+
+    footer {
+        padding: 1.5rem 1rem;
+    }
+
+    footer a {
+        display: block;
+        margin: 5px 0;
+    }
+}
+
+@media (max-width: 480px) {
+    header {
+        padding: 0.5rem 1%;
+    }
+
+    header h1 {
+        font-size: 1.5rem;
+    }
+
+    nav ul {
+        gap: 10px;
+    }
+
+    nav a {
+        font-size: 0.9rem;
+    }
+
+    main {
+        padding: 0.5rem 1%;
+    }
+
+    .card {
+        padding: 1rem;
+        border-radius: 8px;
+    }
+
+    #bible-verse-container {
+        padding: 1rem;
+        border-radius: 10px;
+    }
+
+    .join-us-card {
+        padding: 15px;
+    }
+
+    .join-us-card h2 {
+        font-size: 1.2rem;
+    }
+
+    .form-group label {
+        font-size: 0.8rem;
+    }
+
+    .form-group input {
+        padding: 8px;
+        font-size: 0.9rem;
+    }
+
+    .btn-submit {
+        padding: 10px;
+        font-size: 0.9rem;
+    }
+
+    button {
+        padding: 8px 16px;
+    }
+
+    .verse-card {
+        padding: 10px;
+    }
+
+    #random-verse-text {
+        font-size: 1rem;
+    }
+
+    footer {
+        padding: 1rem 0.5rem;
+        font-size: 0.9rem;
+    }
 }
