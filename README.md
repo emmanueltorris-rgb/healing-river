@@ -2,6 +2,10 @@
 
 This is a simple static website for Healing River Ministries. It includes pages for home, about, ministries, giving, and contact, as well as client-side features such as daily inspiration and SMS-related actions.
 
+## Live Site
+
+View the live website at: https://emmanueltorris-rgb.github.io/healing-river/
+
 ## Project structure
 
 - `index.html` - home page with service registration, daily inspiration, and SMS subscription sections.
